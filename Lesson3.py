@@ -1,7 +1,7 @@
 # Практическая работа. Семинар 3. Списки и словари.
 
-sp = list()
-sp = [-1, True, "Hello", 5.77, 8.999, "world"]
+# sp = list()
+# sp = [-1, True, "Hello", 5.77, 8.999, "world"]
 """
 print(sp)
 print(sp[2:5])
@@ -27,14 +27,14 @@ a = sp.pop()
 """
 
 # Кортежи (удобно передавать данные между приложениями, настройки)
-t = tuple(sp)
+# t = tuple(sp)
 # print(t)
 # print('Hi' in t)
 # print('Hello' in t)
 
-d = {}
-d['дядя Ваня'] = 868686
-d['дядя Вася'] = 212121
+# d = {}
+# d['дядя Ваня'] = 868686
+# d['дядя Вася'] = 212121
 # print(d)
 # print(list(d.keys()))
 # print(d.keys()) # хотим получить информацию обо всех ключах
@@ -99,6 +99,7 @@ print(s)
 # Недавно компания выпустила новую линейку видеокарт. Самые старшие поколения разобрали за пару дней.
 # Напишите программу, которая удаляет наибольшие элементы из списка видеокарт.
 
+"""
 videoCardsNumber = int(input("Введите количество видеокарт: "))
 videoCards = []
 newVideoCardsList = []
@@ -123,7 +124,7 @@ print("Новый список видеокарт: [", end=' ')
 for item in range (len(newVideoCardsList)):
     print(newVideoCardsList[item], end=' ')
 print(']')
-
+"""
 # Задача 2: Кино
 # Илья зашёл на любительский киносайт, на котором пользователи оставляют рецензии на фильмы. 
 # Их список: films = [‘Крепкий орешек’, ‘Назад в будущее’, ‘Таксист’, ‘Леон’, ‘Богемская рапсодия’, ‘Город грехов’, ‘Мементо’, ‘Отступники’, ‘Деревня’]
@@ -131,24 +132,85 @@ print(']')
 # чтобы позже прочитать рецензии на них.
 # Напишите программу, в которой пользователь вводит фильм. Если кинокартина есть в перечне, 
 # то добавляется в список любимых. Если её нет, то выводится ошибка. В конце выведите весь список любимых фильмов.
+"""
+films = ["Крепкий орешек", "Назад в будущее", "Таксист", 
+         "Леон", "Богемская рапсодия", "Город грехов",
+         "Мементо", "Отступники", "Деревня"]
+my_list = []
 
+movies_count = int(input("Сколько фильмов хотите добавить? "))
+
+for _ in range (movies_count):
+    movie = input("Введите название фильма: ")
+    
+    if movie in films:
+        my_list.append(movie)
+    else:
+        print(f"Ошибка: фильма {movie} у нас нет :(")
+        
+print(f"\nВаш список любимых фильмов: {my_list}")
+"""
 # Задача 3: Сортировка
 # Дан список из N чисел. Напишите программу, которая сортирует элементы списка по возрастанию и выводит их на экран. 
 # Дополнительный список использовать нельзя.
 # Также нельзя использовать готовые функции sorted/min/max и метод sort
 # Постарайтесь придумать и написать как можно более эффективный алгоритм сортировки.
+"""
+original_list = [1, 4, -3, 0, 10]
 
+print("Исходный список: ", original_list)
+
+for i in range (len(original_list) - 1):
+    for j in range (len(original_list) - 1 - i):
+        if original_list[j] > original_list[j+1]:
+            original_list[j], original_list[j+1] = original_list[j+1], original_list[j]
+print("Отсортированный список: ", original_list)
+"""
 # Задача 4: Товары
 # В базе данных магазина вся необходимая информация по товарам делится на два словаря: 
 # первый отвечает за коды товаров, второй — за списки количества разнообразных товаров на складе: ...
+"""
+goods = {'Лампа': '12345', 'Стол': '23456', 'Диван': '34567', 'Стул': '45678'}
+store = {'12345': [{'quantity': 27, 'price': 42},], '23456':[{'quantity': 22, 'price': 510}, {'quantity': 32, 'price': 520},], '34567': [{'quantity': 2, 'price': 1200}, {'quantity': 1, 'price': 1150},], '45678': [{'quantity': 50, 'price': 100}, {'quantity': 12, 'price': 95}, {'quantity': 43, 'price': 97},],}
 
+for item_name in goods.keys():
+    item_code = goods[item_name]
+    
+    total_quantity = 0
+    total_cost = 0
+    
+    for entry in store[item_code]:
+        total_quantity += entry['quantity']
+        total_cost += entry['price'] * entry['quantity']
+    print('{} - {} штук(и), стоимость {} рубля(ей).'.format(item_name, total_quantity, total_cost))
+"""
 # Задача 5: Пицца
 # В базе данных интернет-магазина PizzaTime хранятся сведения о том, кто, что и сколько заказывал у них в определённый период. 
 # Вам нужно структурировать эту информацию и определить, сколько всего пицц купил каждый заказчик.
 # На вход в программу подаётся N заказов. Каждый заказ представляет собой строку вида «Покупатель — название пиццы — количество заказанных пицц».
 # Реализуйте код, который выводит список покупателей и их заказов по алфавиту. 
 # Учитывайте, что один человек может заказать одну и ту же пиццу несколько раз.
+"""
+orders_count = int(input('Введите количество заказов: '))
+database = dict()
 
+for i_order in range(orders_count):
+    customer, pizza_name, count = input('{} заказ: '.format(i_order + 1)).split()
+    count = int(count)
+    
+    if customer not in database:
+        database[customer] = {pizza_name: count}
+    else:
+        if pizza_name in database[customer]:
+            database[customer][pizza_name] += count
+        else:
+            database[customer][pizza_name] = count
+
+for customer in sorted(database.keys()):
+    print('{}:'.format(customer))
+    for pizza_name in sorted(database[customer].keys()):
+        print('{}: {}'.format(pizza_name, database[customer][pizza_name]))
+"""
 # Дополнительная задача 1: НЕГАФИБОНАЧЧИ
 # Задайте число. Составьте список чисел Фибоначчи, в том числе для отрицательных индексов.
 # Пример:
