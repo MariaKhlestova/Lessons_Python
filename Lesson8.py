@@ -39,7 +39,7 @@ for line in reversed(lines):
 # настольной игре «Орлеан»: фамилии, имена и количество баллов, набранных в 
 # первом туре. Во второй тур проходят участники, которые набрали более K баллов в первом туре.
 # Напишите программу, которая выводит в файл second_tour.txt данные всех участников, прошедших во второй тур, с нумерацией.
-
+"""
 with open("first_tour.txt", "r") as file:
     lines = file.readlines()
     k = int(lines[0])
@@ -64,3 +64,32 @@ with open("second_tour.txt", "w") as file:
     for player, score in sorted_filter_player.items():
         file.write(f"{count}) {player} {score}\n")
         count += 1
+"""
+# задание 4. Частотный анализ
+# Есть файл text.txt, который содержит текст. Напишите программу, которая 
+# выполняет частотный анализ, определяя долю каждой буквы английского 
+# алфавита в общем количестве английских букв в тексте, и выводит результат в файл analysis.txt. 
+# Символы, не являющиеся буквами английского алфавита, учитывать не нужно.
+"""
+english_alphabet = 'abcdefghijklmnoprstuvwxyz'
+total_letters = 0
+
+with open("text.txt", "r") as file:
+    text = file.read().lower()
+
+letter_count = {letter: 0 for letter in english_alphabet}
+
+for char in text:
+    if char in english_alphabet:
+        letter_count[char] += 1
+        total_letters += 1
+        
+letter_freq = {letter: (count / total_letters) for letter, count in letter_count.items() if count > 0}
+
+sorted_letters = sorted(letter_freq.items(), key=lambda x: (-x[1], x[0]))
+
+with open("analysis.txt", "w") as file:
+    for letter, freq in sorted_letters:
+        file.write(f"{letter} {freq:.3f}\n")
+""" 
+        
