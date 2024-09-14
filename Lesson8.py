@@ -18,3 +18,4 @@ numbers_file.close()
 sum_file = open("answer.txt", "w", encoding="utf-8")
 
 sum_file.write(str(total_sum))
+sum_file.close()
